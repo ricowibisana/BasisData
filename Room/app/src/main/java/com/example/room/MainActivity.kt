@@ -24,5 +24,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        btn_masuk.setOnClickListener {
+
+            var nama = btn_nama.text.toString()
+            var alamat = btn_alamat.text.toString()
+
+            hasil.setText("nama = $nama \nalamat = $alamat")
+
+            GlobalScope.launch {
+                db.mhsDao().insertAll(MhsEntity(0, "$nama", "$alamat"))
+                val data = db.mhsDao().getAll()
+
+                data?.forEach {
+                    Log.d("DATABASE", it.toString())
+                }
+            }
+        }
+
     }
 }
